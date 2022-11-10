@@ -40,6 +40,12 @@
                     <div class="col-lg-3">
                         <select name="tipo" class="form-control">
                             <%--                    ACA DEBE COLOCAR LA LISTA DE OPCIONES MOSTRADAS EN EL SERVLET--%>
+                            <option>
+                                nombre
+                            </option>
+                            <option>
+                                pais
+                            </option>
                         </select>
                     </div>
                     <div class="col-lg-5">
