@@ -115,12 +115,14 @@ public class DaoArbitros extends DaoBase{
         return arbitro;
     }
 
-    public void borrarArbitro(int id) {
-        String sql = "DELETE FROM arbitro WHERE id=?";
+    public void borrarArbitro(int idArbitro) {
+        String sql = "DELETE FROM arbitro WHERE idArbitro = ? ";
         try(Connection connection = this.getConection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setInt(1,id);
+
+            pstmt.setInt(1,idArbitro);
             pstmt.executeUpdate();
+
         }catch (SQLException e){
             throw new RuntimeException();
         }

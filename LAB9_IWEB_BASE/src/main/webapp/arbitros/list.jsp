@@ -74,7 +74,7 @@ ArrayList<String> opciones = (ArrayList<String>) request.getAttribute("opciones"
                     <td><%=arbitro.getNombre()%></td>
                     <td><%=arbitro.getPais()%></td>
                     <td>
-                        <a href="<%=request.getContextPath()%>/ArbitroServlet?action=borrar&id=">
+                        <a href="<%=request.getContextPath()%>/ArbitroServlet?action=borrar&id=<%=arbitro.getIdArbitro()%>">
                             Borrar
                         </a>
                     </td>

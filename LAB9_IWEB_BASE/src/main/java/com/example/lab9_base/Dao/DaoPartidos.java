@@ -74,4 +74,21 @@ public class DaoPartidos extends DaoBase {
         }
 
     }
+
+    public void borrarArbitro(int idArbitro) {
+
+        String sql = "delete from partido where arbitro = ?";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1,idArbitro);
+
+            pstmt.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+
+    }
 }

@@ -2,6 +2,7 @@ package com.example.lab9_base.Controller;
 
 import com.example.lab9_base.Bean.Arbitro;
 import com.example.lab9_base.Dao.DaoArbitros;
+import com.example.lab9_base.Dao.DaoPartidos;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -108,6 +109,7 @@ public class ArbitroServlet extends HttpServlet {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
+        DaoPartidos daoPartidos = new DaoPartidos();
 
         DaoArbitros daoArbitros = new DaoArbitros();
 
@@ -137,6 +139,7 @@ public class ArbitroServlet extends HttpServlet {
                 String idArbitroStr = request.getParameter("id");
                 int idArbitro = Integer.parseInt(idArbitroStr);
                 daoArbitros.borrarArbitro(idArbitro);
+
                 response.sendRedirect(request.getContextPath() + "/ArbitroServlet");
 
                 break;
