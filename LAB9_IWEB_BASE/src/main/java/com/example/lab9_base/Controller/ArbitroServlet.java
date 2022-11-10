@@ -133,11 +133,11 @@ public class ArbitroServlet extends HttpServlet {
 
                 break;
             case "borrar":
-                /*
-                Inserte su código aquí
-                */
+
                 String idArbitroStr = request.getParameter("id");
                 int idArbitro = Integer.parseInt(idArbitroStr);
+
+                daoPartidos.borrarPartidoPorArbitro(idArbitro);
                 daoArbitros.borrarArbitro(idArbitro);
 
                 response.sendRedirect(request.getContextPath() + "/ArbitroServlet");

@@ -75,7 +75,7 @@ public class DaoPartidos extends DaoBase {
 
     }
 
-    public void borrarArbitro(int idArbitro) {
+    public void borrarPartidoPorArbitro(int idArbitro) {
 
         String sql = "delete from partido where arbitro = ?";
 
