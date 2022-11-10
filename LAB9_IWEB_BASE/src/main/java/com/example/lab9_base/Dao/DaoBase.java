@@ -4,7 +4,6 @@ package com.example.lab9_base.Dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 public abstract class DaoBase {
 
@@ -16,7 +15,7 @@ public abstract class DaoBase {
             }
 
             String username = "root";
-            String password = "123456";
+            String password = "root";
             String database = "lab9";
             String url = "jdbc:mysql://localhost:3306/" +database ;
 
