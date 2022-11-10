@@ -19,6 +19,7 @@ public class ArbitroServlet extends HttpServlet {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
+        DaoArbitros daoArbitros = new DaoArbitros();
 
         switch (action) {
 
@@ -26,12 +27,26 @@ public class ArbitroServlet extends HttpServlet {
                 /*
                 Inserte su código aquí
                 */
+
+
+                String searchTExt = request.getParameter("buscarId");
+                ArrayList<Arbitro> lista = daoArbitros.busquedaNombre("lista", lista);
+                request.setAttribute("buscarId");
                 break;
 
             case "guardar":
                 /*
                 Inserte su código aquí
                 */
+                String arbitroNombre = request.getParameter("arbitroNombre");
+                String arbitroPais = request.getParameter("arbitroPais");
+
+                Arbitro arbitro = new Arbitro();
+                arbitro.setNombre(arbitroNombre);
+                arbitro.setPais(arbitroPais);
+                daoArbitros.crearArbitro(arbitro);
+
+                response.sendRedirect(request.getContextPath()+"/ArbitroServlet");
                 break;
 
         }
@@ -52,28 +67,38 @@ public class ArbitroServlet extends HttpServlet {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
+        Arbitro arbitro;
+        DaoArbitros daoArbitros = new DaoArbitros();
 
         switch (action) {
             case "lista":
                 /*
                 Inserte su código aquí
                  */
-                DaoArbitros daoArbitros = new DaoArbitros();
+
                 ArrayList<Arbitro> listaArbitro = daoArbitros.listarArbitros();
                 request.setAttribute("listaArbitro", listaArbitro);
                 view = request.getRequestDispatcher("/arbitros/list.jsp");
                 view.forward(request, response);
                 break;
+
             case "crear":
                 /*
                 Inserte su código aquí
                 */
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/arbitros/list.jsp");
+                requestDispatcher.forward(request, response);
 
                 break;
             case "borrar":
                 /*
                 Inserte su código aquí
                 */
+                String idArbitroStr = request.getParameter("id");
+                int idArbitro = Integer.parseInt(idArbitroStr);
+                daoArbitros.borrarArbitro(idArbitro);
+                response.sendRedirect(request.getContextPath() + "/ArbitroServlet");
+
                 break;
         }
     }
