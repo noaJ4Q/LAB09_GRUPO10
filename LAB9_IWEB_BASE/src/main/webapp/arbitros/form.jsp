@@ -1,4 +1,9 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.lab9_base.Bean.Seleccion" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    ArrayList<String> paises = (ArrayList<String>) request.getAttribute("paises");
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,16 +32,21 @@
                 <div class="col"></div>
                 <div class="col-md-6">
                     <h1 class='mb-3'>Crear un Árbitro</h1>
-                    <form method="POST" action="<%=request.getContextPath()%>/ArbitroServlet?action=guardar">
+                    <form class="needs-validation" method="POST" action="<%=request.getContextPath()%>/ArbitroServlet?action=guardar" novalidate>
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre">
+                            <input type="text" class="form-control" name="nombre" required>
+                            <div class="invalid-feedback">Ingrese un nombre</div>
                         </div>
                         <div class="form-group">
                             <label>País</label>
-                            <select name="pais" class="form-control">
-                                <%--  COLOCAR LISTA DE PAÍSES BRINDADA EN EL SERVLET--%>
+                            <select name="pais" class="form-control" required>
+                                <option selected disabled value="">Escoga un país</option>
+                                <%for (String s: paises){%>
+                                <option value="<%=s%>"><%=s%></option>
+                                <%}%>
                             </select>
+                            <div class="invalid-feedback">Seleccione un país</div>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="<%= request.getContextPath()%>/ArbitroServlet" class="btn btn-danger">Cancelar</a>
@@ -54,6 +64,29 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
                 crossorigin="anonymous"></script>
+
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
+        </script>
 
     </body>
 </html>

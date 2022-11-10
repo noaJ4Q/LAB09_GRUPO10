@@ -2,7 +2,10 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ArrayList<Arbitro> listaArbitro = (ArrayList<Arbitro>) request.getAttribute("listaArbitro") ;%>
+<% ArrayList<Arbitro> listaArbitros = (ArrayList<Arbitro>) request.getAttribute("listaArbitros") ;
+String busqueda = (String) request.getAttribute("busqueda");
+ArrayList<String> opciones = (ArrayList<String>) request.getAttribute("opciones");
+%>
 
 <html>
     <head>
@@ -39,17 +42,14 @@
                 <form method="post" action="<%= request.getContextPath()%>/ArbitroServlet?action=buscar" class="row">
                     <div class="col-lg-3">
                         <select name="tipo" class="form-control">
-                            <%--                    ACA DEBE COLOCAR LA LISTA DE OPCIONES MOSTRADAS EN EL SERVLET--%>
-                            <option>
-                                nombre
-                            </option>
-                            <option>
-                                pais
-                            </option>
+                            <%for (String s:opciones){
+                            %>
+                            <option value="<%=s%>"><%=s%></option>
+                            <%}%>
                         </select>
                     </div>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="buscar">
+                        <input type="text" class="form-control" name="buscar" value="<%=busqueda != null? busqueda:""%>">
                     </div>
                     <div class="col-lg-2">
                         <button type="submit" class="btn btn-primary">Buscar</button>
@@ -67,8 +67,8 @@
                     <th>Pais</th>
                     <th></th>
                 </tr>
-                <%int i = 1;
-                    for (Arbitro arbitro: listaArbitro){%>
+                <%
+                    for (Arbitro arbitro: listaArbitros){%>
                 <tr>
                     <td><%=arbitro.getIdArbitro()%></td>
                     <td><%=arbitro.getNombre()%></td>

@@ -1,4 +1,11 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.lab9_base.Bean.Seleccion" %>
+<%@ page import="com.example.lab9_base.Bean.Arbitro" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    ArrayList<Seleccion> listaSelecciones = (ArrayList<Seleccion>) request.getAttribute("listaSelecciones");
+    ArrayList<Arbitro> listaArbitros = (ArrayList<Arbitro>) request.getAttribute("listaArbitros");
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,33 +34,47 @@
                 <div class="col"></div>
                 <div class="col-md-6">
                     <h1 class='mb-3'>Crear un Partido de Clasificatorias</h1>
-                    <form method="POST" action="<%=request.getContextPath()%>/PartidoServlet?action=guardar">
+                    <form class="needs-validation" method="POST" action="<%=request.getContextPath()%>/PartidoServlet?action=guardar" novalidate>
                         <div class="form-group">
                             <label>Jornada</label>
-                            <input type="number" class="form-control" name="jornada">
+                            <input type="number" class="form-control" name="jornada" required>
+                            <div class="invalid-feedback">Ingrese una jornada</div>
                         </div>
                         <div class="form-group">
                             <label>Fecha</label>
                             <input class="form-control datetimepicker" id="fecha" name="fecha"
-                                   type="date"/>
+                                   type="date" required>
+                            <div class="invalid-feedback">Seleccione una fecha</div>
                         </div>
                         <div class="form-group">
                             <label>Selección local</label>
-                            <select name="local" class="form-control">
-                                <%--                       COLOCAR LISTA DE SELECCIONES DE LA BASE DE DATOS--%>
+                            <select name="local" class="form-control" required>
+                                <option selected disabled value="">Escoga una selección</option>
+                                <%for (Seleccion s: listaSelecciones){%>
+                                <option value="<%=s.getIdSeleccion()%>"><%=s.getNombre()%></option>
+                                <%}%>
                             </select>
+                            <div class="invalid-feedback">Seleccione un equipo</div>
                         </div>
                         <div class="form-group">
                             <label>Selección Visitante</label>
-                            <select name="visitante" class="form-control">
-                                <%--                        COLOCAR LISTA DE SELECCIONES DE LA BASE DE DATOS--%>
+                            <select name="visitante" class="form-control" required>
+                                <option selected disabled value="">Escoga una selección</option>
+                                <%for (Seleccion s: listaSelecciones){%>
+                                <option value="<%=s.getIdSeleccion()%>"><%=s.getNombre()%></option>
+                                <%}%>
                             </select>
+                            <div class="invalid-feedback">Seleccione un equipo</div>
                         </div>
                         <div class="form-group">
                             <label>Árbitro</label>
-                            <select name="arbitro" class="form-control">
-                                <%--                        COLOCAR LISTA DE ÁRBITRO DE LA BASE DE DATOS--%>
+                            <select name="arbitro" class="form-control" required>
+                                <option selected disabled value="">Escoga un árbitro</option>
+                                <%for (Arbitro a: listaArbitros){%>
+                                <option value="<%=a.getIdArbitro()%>"><%=a.getNombre()%></option>
+                                <%}%>
                             </select>
+                            <div class="invalid-feedback">Seleccione un árbitro</div>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="<%=request.getContextPath()%>/PartidoServlet" class="btn btn-danger">Cancelar</a>
@@ -71,5 +92,28 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
                 crossorigin="anonymous"></script>
+
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
+        </script>
     </body>
 </html>

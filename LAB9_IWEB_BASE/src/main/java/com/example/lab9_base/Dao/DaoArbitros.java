@@ -28,12 +28,10 @@ public class DaoArbitros extends DaoBase{
     }
 
     public void crearArbitro(Arbitro arbitro) {
-        /*
-        Inserte su código aquí
-        */
+
         String sql = "INSERT INTO arbitro (nombre, pais) VALUES (?,?)";
         try(Connection connection = this.getConection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);){
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setString(1, arbitro.getNombre());
             pstmt.setString(2,arbitro.getPais());
             pstmt.executeUpdate();
@@ -46,13 +44,10 @@ public class DaoArbitros extends DaoBase{
     public ArrayList<Arbitro> busquedaPais(String pais) {
 
         ArrayList<Arbitro> arbitros = new ArrayList<>();
-        /*
-        Inserte su código aquí
-        */
+        String sql = "select * from arbitro where pais like ?";
 
-        String sql = "select * from arbitro";
         try(Connection connection = this.getConection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);){
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
 
             pstmt.setString(1, "%"+pais+"%");
 
@@ -75,12 +70,10 @@ public class DaoArbitros extends DaoBase{
     public ArrayList<Arbitro> busquedaNombre(String nombre) {
 
         ArrayList<Arbitro> arbitros = new ArrayList<>();
-        /*
-        Inserte su código aquí
-        */
-        String sql = "select * from arbitro";
+        String sql = "select * from arbitro where nombre like ?";
+
         try(Connection connection = this.getConection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);){
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
 
             pstmt.setString(1, "%"+nombre+"%");
             try(ResultSet rs = pstmt.executeQuery()){
@@ -102,12 +95,10 @@ public class DaoArbitros extends DaoBase{
 
     public Arbitro buscarArbitro(int id) {
         Arbitro arbitro = new Arbitro();
-        /*
-        Inserte su código aquí
-        */
-        String sql = "select * from arbitro";
+
+        String sql = "select * from arbitro where idArbitro = ?";
         try(Connection connection = this.getConection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);){
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
 
             pstmt.setInt(1, id);
             try(ResultSet rs = pstmt.executeQuery()){
@@ -127,7 +118,7 @@ public class DaoArbitros extends DaoBase{
     public void borrarArbitro(int id) {
         String sql = "DELETE FROM arbitro WHERE id=?";
         try(Connection connection = this.getConection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);){
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setInt(1,id);
             pstmt.executeUpdate();
         }catch (SQLException e){
